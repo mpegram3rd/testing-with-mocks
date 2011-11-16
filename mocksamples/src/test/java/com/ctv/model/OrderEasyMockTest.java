@@ -33,16 +33,11 @@ public class OrderEasyMockTest extends EasyMockSupport {
 	 * Traditional state based unit test.
 	 */
 	@Test
-	public void testGetTotalCostTraditional() {
-		try {
-			order.addItem(videoGame);
-			assertThat(order.getItemCount(), equalTo(1));
-			assertThat(order.getTotalCost(), equalTo(videoGame.getPrice()));
-		}
-		catch (Exception ex) {
-			fail("Unexpected Exception occurred");
-		}
+	public void testGetTotalCostTraditional() throws Exception {
 		
+		order.addItem(videoGame);
+		assertThat(order.getItemCount(), equalTo(1));
+		assertThat(order.getTotalCost(), equalTo(videoGame.getPrice()));		
 	}
 	
 
@@ -50,7 +45,7 @@ public class OrderEasyMockTest extends EasyMockSupport {
 	 * Mock based test verifying both state and behavior.
 	 */
 	@Test
-	public void testGetTotalCostMocked () {
+	public void testGetTotalCostMocked () throws Exception {
 		double expectedPrice = 12.95;
 		
 		movie = createMock(Item.class);
@@ -63,15 +58,10 @@ public class OrderEasyMockTest extends EasyMockSupport {
 		// reset mocks for use in the test
 		replayAll();
 		
-		try {
-			order.addItem(movie);
-			// verify state.
-			assertThat(order.getItemCount(), equalTo(1));
-			assertThat(order.getTotalCost(), equalTo(expectedPrice));
-		}
-		catch (Exception ex) {
-			fail("Unexpected Exception occurred");
-		}
+		order.addItem(movie);
+		// verify state.
+		assertThat(order.getItemCount(), equalTo(1));
+		assertThat(order.getTotalCost(), equalTo(expectedPrice));
 		
 		// Verify that the expected mock behavior occurred.
 		verifyAll();
@@ -84,7 +74,7 @@ public class OrderEasyMockTest extends EasyMockSupport {
 	 * 
 	 */
 	@Test
-	public void testSetStatusTraditional() {
+	public void testSetStatusTraditional() throws Exception {
 		try {
 			order.setStatus(OrderStatusEnum.CANCELLED);
 			order.setStatus(OrderStatusEnum.NEW);
@@ -101,7 +91,7 @@ public class OrderEasyMockTest extends EasyMockSupport {
 	 * mocking the private method so the test focuses only on the behavior of the method under test.
 	 */
 	@Test
-	public void testSetStatusPartialMocked() {
+	public void testSetStatusPartialMocked() throws Exception {
 		fail ("EasyMock does not provide a way to mock private methods");
 	}
 }	

@@ -36,16 +36,10 @@ public class OrderPowermockTest {
 	 * Traditional state based unit test.
 	 */
 	@Test
-	public void testGetTotalCostTraditional() {
-		try {
-			order.addItem(videoGame);
-			assertThat(order.getItemCount(), equalTo(1));
-			assertThat(order.getTotalCost(), equalTo(videoGame.getPrice()));
-		}
-		catch (Exception ex) {
-			fail("Unexpected Exception occurred");
-		}
-		
+	public void testGetTotalCostTraditional() throws Exception {
+		order.addItem(videoGame);
+		assertThat(order.getItemCount(), equalTo(1));
+		assertThat(order.getTotalCost(), equalTo(videoGame.getPrice()));
 	}
 	
 
@@ -53,7 +47,7 @@ public class OrderPowermockTest {
 	 * Mock based test verifying both state and behavior.
 	 */
 	@Test
-	public void testGetTotalCostMocked () {
+	public void testGetTotalCostMocked () throws Exception {
 		double expectedPrice = 12.95;
 		
 		movie = createMock(Item.class);
@@ -67,15 +61,10 @@ public class OrderPowermockTest {
 		// reset mocks for use in the test
 		replayAll();
 		
-		try {
-			order.addItem(movie);
-			// verify state.
-			assertThat(order.getItemCount(), equalTo(1));
-			assertThat(order.getTotalCost(), equalTo(expectedPrice));
-		}
-		catch (Exception ex) {
-			fail("Unexpected Exception occurred");
-		}
+		order.addItem(movie);
+		// verify state.
+		assertThat(order.getItemCount(), equalTo(1));
+		assertThat(order.getTotalCost(), equalTo(expectedPrice));
 		
 		// Verify that the expected mock behavior occurred.
 		verifyAll();
@@ -88,7 +77,7 @@ public class OrderPowermockTest {
 	 * 
 	 */
 	@Test
-	public void testSetStatusTraditional() {
+	public void testSetStatusTraditional() throws Exception {
 		try {
 			order.setStatus(OrderStatusEnum.CANCELLED);
 			order.setStatus(OrderStatusEnum.NEW);

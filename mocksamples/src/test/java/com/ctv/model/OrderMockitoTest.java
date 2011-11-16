@@ -32,16 +32,11 @@ public class OrderMockitoTest {
 	 * Traditional state based unit test.
 	 */
 	@Test
-	public void testGetTotalCostTraditional() {
-		try {
-			order.addItem(videoGame);
-			assertThat(order.getItemCount(), equalTo(1));
-			assertThat(order.getTotalCost(), equalTo(videoGame.getPrice()));
-		}
-		catch (Exception ex) {
-			fail("Unexpected Exception occurred");
-		}
+	public void testGetTotalCostTraditional() throws Exception {
 		
+		order.addItem(videoGame);
+		assertThat(order.getItemCount(), equalTo(1));
+		assertThat(order.getTotalCost(), equalTo(videoGame.getPrice()));
 	}
 	
 
@@ -49,7 +44,7 @@ public class OrderMockitoTest {
 	 * Mock based test verifying both state and behavior.
 	 */
 	@Test
-	public void testGetTotalCostMocked () {
+	public void testGetTotalCostMocked () throws Exception {
 		double expectedPrice = 12.95;
 		
 		movie = mock(Item.class);
@@ -61,15 +56,10 @@ public class OrderMockitoTest {
 		// Mockito doesn't require an explicit reset (or replay) of the mocks 
 		// Just start using them.
 		
-		try {
-			order.addItem(movie);
-			// verify state.
-			assertThat(order.getItemCount(), equalTo(1));
-			assertThat(order.getTotalCost(), equalTo(expectedPrice));
-		}
-		catch (Exception ex) {
-			fail("Unexpected Exception occurred");
-		}
+		order.addItem(movie);
+		// verify state.
+		assertThat(order.getItemCount(), equalTo(1));
+		assertThat(order.getTotalCost(), equalTo(expectedPrice));
 		
 		// Verify that the expected mock behavior occurred.
 		verify(movie, times(1)).getPrice();  
@@ -82,7 +72,7 @@ public class OrderMockitoTest {
 	 * 
 	 */
 	@Test
-	public void testSetStatusTraditional() {
+	public void testSetStatusTraditional() throws Exception {
 		try {
 			order.setStatus(OrderStatusEnum.CANCELLED);
 			order.setStatus(OrderStatusEnum.NEW);
@@ -99,7 +89,7 @@ public class OrderMockitoTest {
 	 * mocking the private method so the test focuses only on the behavior of the method under test.
 	 */
 	@Test
-	public void testSetStatusPartialMocked() {
+	public void testSetStatusPartialMocked() throws Exception {
 		fail ("Mockito does not provide a way to mock private methods");
 	}
 }
